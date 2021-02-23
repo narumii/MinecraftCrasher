@@ -28,6 +28,10 @@ public class Packet {
     netOut.writeByteArray(packetData);
   }
 
+  public byte[] getPacketData() {
+    return packetData;
+  }
+
   public static PacketBuilder builder() {
     return new PacketBuilder();
   }
