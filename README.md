@@ -15,4 +15,26 @@
 - Spigot: Malformed Handshake packet with only 3 bytes
 
 ### TODO
-- Add all "fixmem" crash methods
+> Add all "fixmem" crash methods
+- Bots ✔
+- ACK
+- SSH Crasher 
+- Aegis bypass
+- Ping
+- Join & Ping
+- "Null" Ping
+- Auth crash - idk
+- "Socket" Ping - wtf
+- Username overflow - xd?
+- "Fast" Ping - xd
+- Overload - xd?
+- Auth smasher - wtf
+- Bungee crasher - idk
+- ROTATE - i'm confused
+- "Socket" bots
+- Encryption - idk
+- Custom bypass - idk
+
+> MOTD = PING
+
+> LOGIN = JOIN
