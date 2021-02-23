@@ -36,7 +36,3 @@
 - "Socket" bots ✔
 - Encryption - idk
 - Custom bypass - idk
-
-> MOTD = PING
-
-> LOGIN = JOIN
