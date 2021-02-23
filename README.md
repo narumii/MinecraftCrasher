@@ -12,6 +12,8 @@
 
 ### Exploits
 - Bot: Simple minecraft bots (Handshake + LoginStart)
+- Ping: Handshake packet with status
+- Login: Handshake packet with login
 - Spigot: Malformed packet ( ͡° ͜ʖ ͡°)
 
 ### TODO
@@ -20,18 +22,18 @@
 - ACK
 - SSH Crasher 
 - Aegis bypass
-- Ping
+- Ping ✔
 - Join & Ping
 - "Null" Ping
 - Auth crash - idk
-- "Socket" Ping - wtf
+- "Socket" Ping - wtf ✔
 - Username overflow - xd?
-- "Fast" Ping - xd
+- "Fast" Ping - xd ✔
 - Overload - xd?
 - Auth smasher - wtf
 - Bungee crasher - idk
 - ROTATE - i'm confused
-- "Socket" bots
+- "Socket" bots ✔
 - Encryption - idk
 - Custom bypass - idk
 
