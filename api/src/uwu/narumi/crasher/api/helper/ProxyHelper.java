@@ -12,8 +12,6 @@ import java.net.SocketImpl;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ProxyHelper {
@@ -106,14 +104,14 @@ public final class ProxyHelper {
   }
 
   public static Proxy getHttp() {
-    if (HTTP_INDEX.get() > HTTP_PROXIES.size())
+    if (HTTP_INDEX.get() >= HTTP_PROXIES.size())
       HTTP_INDEX.set(0);
 
     return HTTP_PROXIES.get(HTTP_INDEX.getAndIncrement());
   }
 
   public static Proxy getSocks() {
-    if (SOCKS_INDEX.get() > SOCKS_PROXIES.size())
+    if (SOCKS_INDEX.get() >= SOCKS_PROXIES.size())
       SOCKS_INDEX.set(0);
 
     return SOCKS_PROXIES.get(SOCKS_INDEX.getAndIncrement());

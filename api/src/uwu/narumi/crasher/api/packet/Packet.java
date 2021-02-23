@@ -8,7 +8,7 @@ import uwu.narumi.crasher.api.io.NetOut;
 
 public class Packet {
 
-  private byte[] packetData;
+  private final byte[] packetData;
 
   private Packet(byte[] data) {
     this.packetData = data;
@@ -32,23 +32,26 @@ public class Packet {
     return new PacketBuilder();
   }
 
-  public static class PacketBuilder {
+  public final static class PacketBuilder {
+
     private int id;
     private byte[] bytes;
     private boolean compression;
+
+    private PacketBuilder() {}
 
     public PacketBuilder id(int id) {
       this.id = id;
       return this;
     }
 
-    public PacketBuilder data(byte... data) {
-      this.bytes = data;
+    public PacketBuilder compression(boolean compression) {
+      this.compression = compression;
       return this;
     }
 
-    public PacketBuilder compression(boolean compression) {
-      this.compression = compression;
+    public PacketBuilder data(byte... data) {
+      this.bytes = data;
       return this;
     }
 
@@ -60,7 +63,7 @@ public class Packet {
     public PacketBuilder data(NetOut out) {
       try {
         this.bytes = out.toByteArray();
-      }catch (Exception e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
       return this;
@@ -73,9 +76,9 @@ public class Packet {
         if (compression)
           netOut.writeVarInt(0);
 
-        netOut.writeByteArray(bytes);
+        netOut.write(bytes);
         return new Packet(netOut.toByteArray());
-      }catch (Exception e) {
+      } catch (Exception e) {
         e.printStackTrace();
       }
       return null;

@@ -7,17 +7,18 @@ import uwu.narumi.crasher.api.helper.ProxyHelper;
 import uwu.narumi.crasher.core.command.CrashCommand;
 import uwu.narumi.crasher.core.exploit.Bot;
 import uwu.narumi.crasher.core.exploit.Spigot;
+import uwu.narumi.crasher.core.exploit.UDP;
 
 public enum Crasher {
 
   INSTANCE;
 
-  private CommandManager commandManager;
-  private ExploitManager exploitManager;
+  private final CommandManager commandManager;
+  private final ExploitManager exploitManager;
 
   Crasher() {
     commandManager = new CommandManager(new CrashCommand());
-    exploitManager = new ExploitManager(new Bot(), new Spigot());
+    exploitManager = new ExploitManager(new Bot(), new Spigot(), new UDP());
 
     commandManager.startHandlingCommands();
   }
