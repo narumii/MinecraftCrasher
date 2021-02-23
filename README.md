@@ -15,24 +15,32 @@
 - Ping: Handshake packet with status
 - Login: Handshake packet with login
 - Spigot: Malformed packet ( ͡° ͜ʖ ͡°)
+- Custom: You can send custom bytes
+- Auth: /register passowrd password
+- Encryption: Encryption response
+- Overload: Fucked handshake + loginstart packet + shit bytes
+- PingJoin: Pings server and joins
+- SSH: Flood 22 port
+- UDP: just meme
+- Username: LoginStart with fucked username
 
 ### TODO
 > Add all "fixmem" crash methods
 - Bots ✔
-- ACK
-- SSH Crasher 
+- ACK 
+- SSH Crasher ✔
 - Aegis bypass
 - Ping ✔
-- Join & Ping
-- "Null" Ping
-- Auth crash - idk
+- Join & Ping ✔
+- "Null" Ping ✔
+- Auth crash - idk ✔ (just send chat packet with /register Pass!@2d2 Pass!@2d2, do it on your own lol)
 - "Socket" Ping - wtf ✔
-- Username overflow - xd?
+- Username overflow - xd? ✔
 - "Fast" Ping - xd ✔
-- Overload - xd?
-- Auth smasher - wtf
-- Bungee crasher - idk
-- ROTATE - i'm confused
+- Overload - xd? ✔
+- Auth smasher - wtf ✔ (just send chat packet with /register Pass!@2d2 Pass!@2d2, do it on your own lol) 
+- Bungee crasher - idk ✔ ( private ( ͡° ͜ʖ ͡°) )
+- ROTATE - i'm confused (i'm don't even know what this doing xd)
 - "Socket" bots ✔
-- Encryption - idk
-- Custom bypass - idk
+- Encryption - idk ✔
+- Custom bypass - idk ✔
