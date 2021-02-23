@@ -97,6 +97,7 @@ public final class ProxyHelper {
       method.setAccessible(true);
       method.invoke(socketImpl);
       field.set(socket, socketImpl);
+
       return socket;
     } catch (Exception e) {
       return null;
