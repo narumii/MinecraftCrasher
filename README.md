@@ -12,7 +12,7 @@
 
 ### Exploits
 - Bot: Simple minecraft bots (Handshake + LoginStart)
-- Spigot: Malformed Handshake packet with only 3 bytes
+- Spigot: Malformed packet ( ͡° ͜ʖ ͡°)
 
 ### TODO
 > Add all "fixmem" crash methods
