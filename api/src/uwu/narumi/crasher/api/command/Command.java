@@ -14,7 +14,7 @@ public abstract class Command {
   public Command() {
     CommandInfo commandInfo = this.getClass().getDeclaredAnnotation(CommandInfo.class);
     if (commandInfo == null)
-      throw new IllegalArgumentException( "CONFUSED ANNOTATION EXCEPTION");
+      throw new IllegalArgumentException("CONFUSED ANNOTATION EXCEPTION");
 
     this.alias = commandInfo.alias();
     this.description = commandInfo.description();

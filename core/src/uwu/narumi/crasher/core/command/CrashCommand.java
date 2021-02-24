@@ -31,7 +31,7 @@ public class CrashCommand extends Command {
     } else if (args[0].equalsIgnoreCase("info") && args.length > 1) {
       Crasher.INSTANCE.getExploitManager().getExploit(args[1])
           .ifPresentOrElse(exploit -> System.out.println(String.format("%s: %s\n", exploit.getName(), exploit.getDescription())),
-             () -> System.err.println(String.format("Exploit \"%s\" not found.\n", args[0])));
+             () -> System.out.println(String.format("Exploit \"%s\" not found.\n", args[0])));
     } else {
       Optional<Exploit<?>> exploit = Crasher.INSTANCE.getExploitManager().getExploit(args[0]);
       if (exploit.isPresent()) {

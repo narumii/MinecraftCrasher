@@ -20,10 +20,13 @@ public class CommandManager {
   public void startHandlingCommands() {
     Executors.newSingleThreadExecutor().execute(()-> {
       Scanner scanner = new Scanner(System.in);
-      while (scanner.hasNext()) {
-        System.out.print("> ");
-        handleCommand(scanner.nextLine());
-      }
+      try {
+        while (true) { //you can use scanner.hasNext() / scanner.hasNextLine() but i want command line prefix xd
+          Thread.sleep(10); //anti cpu burner
+          System.out.append("mcc > \r");
+          handleCommand(scanner.nextLine());
+        }
+      }catch (Exception e) {}
     });
   }
 
@@ -39,8 +42,7 @@ public class CommandManager {
       } catch (CommandException e) {
         System.out.println(e.getMessage());
       }
-    }, () -> System.err.printf("Command \"%s\" not found. Use \"help\" to see command list.%n", args[0]));
-
+    }, () -> System.out.printf("Command \"%s\" not found. Use \"help\" to see command list.%n", args[0]));
   }
 
   public void registerCommand(Command command) {

@@ -8,6 +8,7 @@ import uwu.narumi.crasher.core.command.CrashCommand;
 import uwu.narumi.crasher.core.exploit.ACK;
 import uwu.narumi.crasher.core.exploit.Auth;
 import uwu.narumi.crasher.core.exploit.Bot;
+import uwu.narumi.crasher.core.exploit.Bungee;
 import uwu.narumi.crasher.core.exploit.Custom;
 import uwu.narumi.crasher.core.exploit.Encryption;
 import uwu.narumi.crasher.core.exploit.Login;
@@ -27,11 +28,20 @@ public enum Crasher {
   private final ExploitManager exploitManager;
 
   Crasher() {
+    System.out.println("          ┌BugeeCord\n"
+        + "          │\n"
+        + "┌────╦────╩─Lobby───┐\n"
+        + "│  First            │             MinecraftCrasher\n"
+        + "│                   ╠───PVP       Created by なるみ\n"
+        + "╚Second             │\n"
+        + "                 MiniGames\n");
+
     commandManager = new CommandManager(new CrashCommand());
     exploitManager = new ExploitManager(
         new ACK(),
         new Auth(),
         new Bot(),
+        new Bungee(),
         new Custom(),
         new Encryption(),
         new Login(),
@@ -43,16 +53,11 @@ public enum Crasher {
         new UDP(),
         new Username()
     );
-
-    commandManager.startHandlingCommands();
   }
 
   public void init() throws IOException {
     ProxyHelper.loadProxies();
-
-    System.out.println("\n"
-        + "### Use \"help\" command for more information"
-        + "\n");
+    commandManager.startHandlingCommands();
   }
 
   public CommandManager getCommandManager() {

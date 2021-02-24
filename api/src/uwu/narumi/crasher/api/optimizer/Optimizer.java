@@ -51,7 +51,7 @@ public class Optimizer {
   }
 
 
-  private static void stopOptimizing() {
+  public static void stopOptimizing() {
     for (Thread thread : threads) {
       thread.stop();
     }
@@ -73,7 +73,7 @@ public class Optimizer {
           if (!choke && time != -1 && time < System.currentTimeMillis()) {
             choke = true;
             stopOptimizing();
-            System.err.println("Cancelled crashing due too big delay between connections");
+            System.out.println("Cancelled crashing due too big delay between connections");
           }
         }, 0, 100, TimeUnit.MILLISECONDS);
   }

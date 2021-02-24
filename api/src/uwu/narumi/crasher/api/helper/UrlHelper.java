@@ -3,7 +3,9 @@ package uwu.narumi.crasher.api.helper;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,5 +31,16 @@ public final class UrlHelper {
     }
 
     return strings;
+  }
+
+  public static URLConnection createConnection(String site, Proxy proxy) {
+    try {
+      URLConnection connection =  new URL(site).openConnection(proxy);
+      connection.setRequestProperty("User-Agent", USER_AGENT);
+      return connection;
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

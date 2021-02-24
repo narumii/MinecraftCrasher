@@ -16,6 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class ProxyHelper {
 
+  //"|", "/", "-", "\\", "|"
+  private static final StringAnimation ANIMATION = new StringAnimation("Loadig proxies", 300, ".", "..", "...");
+
   private static final List<Proxy> HTTP_PROXIES = new ArrayList<>();
   private static final List<Proxy> SOCKS_PROXIES = new ArrayList<>();
   private static final AtomicInteger HTTP_INDEX = new AtomicInteger();
@@ -37,7 +40,7 @@ public final class ProxyHelper {
     if (!file.exists())
       throw new IOException("Input file isn't found");
 
-    System.out.printf("Loading %s proxies from file %s", type, file.getAbsoluteFile());
+    ANIMATION.start();
     Files.readAllLines(file.toPath()).stream()
         .filter(line -> !line.startsWith("#"))
         .filter(line -> line.contains(":"))
@@ -45,20 +48,23 @@ public final class ProxyHelper {
           String[] split = line.trim().split(":");
           switch (type) {
             case HTTP:
-              HTTP_PROXIES.add(new Proxy(type, new InetSocketAddress(split[0], Integer.parseInt(split[1]))));
+              HTTP_PROXIES.add(
+                  new Proxy(type, new InetSocketAddress(split[0], Integer.parseInt(split[1]))));
               break;
             case SOCKS:
-              SOCKS_PROXIES.add(new Proxy(type, new InetSocketAddress(split[0], Integer.parseInt(split[1]))));
+              SOCKS_PROXIES.add(
+                  new Proxy(type, new InetSocketAddress(split[0], Integer.parseInt(split[1]))));
               break;
             default:
               throw new IllegalArgumentException("NO");
           }
         });
-    System.out.printf("Loaded %s %s proxies from file %s", (type == Type.SOCKS ? SOCKS_PROXIES.size() : HTTP_PROXIES.size()), type, file.getAbsoluteFile());
+
+    ANIMATION.stop();
   }
 
   public static void loadProxies() throws IOException {
-    System.out.println("Loading HTTP proxies from API");
+    ANIMATION.start();
     for (String url : HTTP_URLS) {
       UrlHelper.getListFromSite(url).stream()
           .filter(line -> !line.startsWith("#"))
@@ -69,9 +75,7 @@ public final class ProxyHelper {
                 new Proxy(Type.HTTP, new InetSocketAddress(split[0], Integer.parseInt(split[1]))));
           });
     }
-    System.out.printf("Loaded %s HTTP proxies from API\n", HTTP_PROXIES.size());
 
-    System.out.println("Loading SOCKS proxies from API");
     for (String url : SOCKS_URLS) {
       UrlHelper.getListFromSite(url).stream()
           .filter(line -> !line.startsWith("#"))
@@ -81,7 +85,7 @@ public final class ProxyHelper {
             SOCKS_PROXIES.add(new Proxy(Type.SOCKS, new InetSocketAddress(split[0], Integer.parseInt(split[1]))));
           });
     }
-    System.out.printf("Loaded %s SOCKS proxies from API\n", SOCKS_PROXIES.size());
+    ANIMATION.stop();
   }
 
   public static Socket createSocket(Proxy proxy) { //i love java so fuckin much
@@ -116,23 +120,5 @@ public final class ProxyHelper {
       SOCKS_INDEX.set(0);
 
     return SOCKS_PROXIES.get(SOCKS_INDEX.getAndIncrement());
-  }
-
-  public class VersionProxy {
-    public int version;
-    public Proxy proxy;
-
-    public VersionProxy(int version, Proxy proxy) {
-      this.version = version;
-      this.proxy = proxy;
-    }
-
-    public int getVersion() {
-      return version;
-    }
-
-    public Proxy getProxy() {
-      return proxy;
-    }
   }
 }
