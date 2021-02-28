@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import uwu.narumi.crasher.api.exception.CommandException;
+import uwu.narumi.crasher.api.optimizer.Optimizer;
 
 public class CommandManager {
 
@@ -32,6 +33,7 @@ public class CommandManager {
 
   private void handleCommand(String message) {
     if (message.isBlank() || message.isEmpty()) {
+      Optimizer.stopOptimizing();
       return;
     }
 

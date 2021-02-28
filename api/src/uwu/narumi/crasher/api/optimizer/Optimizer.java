@@ -8,16 +8,32 @@ import java.util.concurrent.TimeUnit;
 public class Optimizer {
 
   private static final List<Thread> threads = new ArrayList<>();
-  private static Thread stopAction;
+  private static Runnable stopAction;
   private static Class<?> clazz;
-  private static boolean choke;
-  private static long time = -1;
+
   private static long chokeTime = 500;
+  private static long time = -1;
+
+  private static boolean check = true;
+  private static boolean disabling;
+  private static boolean choke;
+
+  static {
+    Executors.newSingleThreadScheduledExecutor()
+        .scheduleWithFixedDelay(() -> {
+          if (!disabling && check && !choke && time != -1 && time < System.currentTimeMillis()) {
+            choke = true;
+            stopOptimizing();
+            System.out.println("Cancelled crashing due too big delay between connections");
+          }
+        }, 0, 100, TimeUnit.MILLISECONDS);
+  }
 
   public static void startOptimizing(Class<?> caller) {
     if (clazz != null)
       throw new IllegalArgumentException("NO.");
 
+    check = true;
     clazz = caller;
   }
 
@@ -25,18 +41,77 @@ public class Optimizer {
     if (!new Throwable().getStackTrace()[1].getClassName().equals(clazz.getName()))
       throw new IllegalArgumentException("NO.");
 
-    if (!choke) {
+    post0(runnable);
+  }
+
+  public static void post(Runnable runnable, int amount) {
+    if (!new Throwable().getStackTrace()[1].getClassName().equals(clazz.getName()))
+      throw new IllegalArgumentException("NO.");
+
+    for (int i = 0; i < amount; i++) {
+      post0(runnable);
+    }
+  }
+
+  public static void postFor(Runnable runnable, long time) {
+    if (!new Throwable().getStackTrace()[1].getClassName().equals(clazz.getName()))
+      throw new IllegalArgumentException("NO.");
+
+    Executors.newSingleThreadExecutor().submit(()-> {
+      long forTime = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(time);
+      while (!choke && !disabling && forTime > System.currentTimeMillis()) {
+        post0(runnable);
+      }
+    });
+  }
+
+  public static void postAndAfter(TimeUnit unit, long time, Runnable runnable, Runnable after) {
+    if (!new Throwable().getStackTrace()[1].getClassName().equals(clazz.getName()))
+      throw new IllegalArgumentException("NO.");
+
+    try {
+      post0(runnable);
+      unit.sleep(time);
+      post0(after);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private static void post0(Runnable runnable) {
+    if (!choke && !disabling) {
       Thread thread = new Thread(runnable);
       thread.start();
       threads.add(thread);
     }
   }
 
+  public static void stopOptimizing() {
+    disabling = true;
+    for (Thread thread : threads) {
+      thread.stop();
+    }
+
+    choke = false;
+    clazz = null;
+    time = -1;
+    stopAction = null;
+    chokeTime = 500;
+    check = true;
+
+    threads.clear();
+
+    if (stopAction != null)
+      stopAction.run();
+
+    disabling = false;
+  }
+
   public static void setStopAction(Runnable runnable) {
     if (!new Throwable().getStackTrace()[1].getClassName().equals(clazz.getName()))
       throw new IllegalArgumentException("NO.");
 
-    stopAction = new Thread(runnable);
+    stopAction = runnable;
   }
 
   public static void setChokeTime(long time) {
@@ -50,31 +125,7 @@ public class Optimizer {
     time = System.currentTimeMillis() + chokeTime;
   }
 
-
-  public static void stopOptimizing() {
-    for (Thread thread : threads) {
-      thread.stop();
-    }
-
-    choke = false;
-    clazz = null;
-    time = -1;
-    stopAction = null;
-    chokeTime = 500;
-    threads.clear();
-
-    if (stopAction != null)
-      stopAction.start();
-  }
-
-  static {
-    Executors.newSingleThreadScheduledExecutor()
-        .scheduleWithFixedDelay(() -> {
-          if (!choke && time != -1 && time < System.currentTimeMillis()) {
-            choke = true;
-            stopOptimizing();
-            System.out.println("Cancelled crashing due too big delay between connections");
-          }
-        }, 0, 100, TimeUnit.MILLISECONDS);
+  public static void toggle() {
+    check = !check;
   }
 }

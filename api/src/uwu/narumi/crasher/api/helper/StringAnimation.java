@@ -1,14 +1,16 @@
 package uwu.narumi.crasher.api.helper;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StringAnimation {
 
-  private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-  private final String text;
-  private final String[] chars;
-  private final long delay;
+  private Thread thread;
+  private final AtomicInteger index = new AtomicInteger();
+  private String text;
+  private String[] chars;
+  private long delay;
+
+  public StringAnimation() {}
 
   public StringAnimation(String text, long delay, String... chars) {
     this.text = text;
@@ -17,17 +19,38 @@ public class StringAnimation {
   }
 
   public void start() {
-    executorService.submit(() -> {
-      try {
-        for (String c : chars) {
-          System.out.print(text + " " + c + " \r");
+    thread = new Thread(()-> {
+      while (true) {
+        try {
           Thread.sleep(delay);
-        }
-      } catch (Exception e) { }
+          System.out.print(text + " " + chars[get()] + " \r");
+        }catch (Exception e) {}
+      }
     });
+    thread.start();
+  }
+
+  private int get() {
+    if (index.get() >= chars.length)
+      index.set(0);
+
+    return index.getAndIncrement();
   }
 
   public void stop() {
-    executorService.shutdown();
+    thread.stop();
+    thread = null;
+  }
+
+  public void setText(String text) {
+    this.text = text;
+  }
+
+  public void setChars(String... chars) {
+    this.chars = chars;
+  }
+
+  public void setDelay(long delay) {
+    this.delay = delay;
   }
 }

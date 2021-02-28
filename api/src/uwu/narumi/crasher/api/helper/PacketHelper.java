@@ -42,4 +42,15 @@ public final class PacketHelper {
 
     return null;
   }
+
+  public static Packet createPing() {
+    try {
+      NetOut netOut = new NetOut();
+      netOut.writeLong(System.currentTimeMillis());
+
+      return Packet.builder().id(0x01).data(netOut).build();
+    }catch (Exception e) { }
+
+    return null;
+  }
 }

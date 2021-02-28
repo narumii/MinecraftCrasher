@@ -80,7 +80,8 @@ public class Packet {
         if (compression)
           netOut.writeVarInt(0);
 
-        netOut.write(bytes);
+        if (bytes != null)
+          netOut.write(bytes);
         return new Packet(netOut.toByteArray());
       } catch (Exception e) {
         e.printStackTrace();

@@ -2,6 +2,8 @@ package uwu.narumi.crasher.core.command;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import uwu.narumi.crasher.api.command.Command;
 import uwu.narumi.crasher.api.command.CommandInfo;
@@ -18,6 +20,8 @@ import uwu.narumi.crasher.core.Crasher;
 )
 public class CrashCommand extends Command {
 
+  private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+
   @Override
   public void execute(String... args) throws CommandException {
     if (args.length == 0) {
@@ -30,12 +34,15 @@ public class CrashCommand extends Command {
               .map(Exploit::getName).collect(Collectors.joining(", ")));
     } else if (args[0].equalsIgnoreCase("info") && args.length > 1) {
       Crasher.INSTANCE.getExploitManager().getExploit(args[1])
-          .ifPresentOrElse(exploit -> System.out.println(String.format("%s: %s\n", exploit.getName(), exploit.getDescription())),
-             () -> System.out.println(String.format("Exploit \"%s\" not found.\n", args[0])));
+          .ifPresentOrElse(exploit -> System.out
+                  .println(String.format("%s: %s\n", exploit.getName(), exploit.getDescription())),
+              () -> System.out.println(String.format("Exploit \"%s\" not found.\n", args[0])));
     } else {
+      System.out.println("Started crashing process, if you want to stop it - type \"s\" or \"stop\" in your command line");
       Optional<Exploit<?>> exploit = Crasher.INSTANCE.getExploitManager().getExploit(args[0]);
       if (exploit.isPresent()) {
-        exploit.get().execute(ArgumentParser.parseArgs(exploit.get(), Arrays.copyOfRange(args, 1, args.length)));
+        executor.submit(() -> exploit.get().execute(
+            ArgumentParser.parseArgs(exploit.get(), Arrays.copyOfRange(args, 1, args.length))));
         return;
       }
 
