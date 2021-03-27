@@ -23,7 +23,6 @@ import uwu.narumi.crasher.core.exploit.SSH;
 import uwu.narumi.crasher.core.exploit.Spigot;
 import uwu.narumi.crasher.core.exploit.UDP;
 import uwu.narumi.crasher.core.exploit.Username;
-import uwu.narumi.crasher.core.exploit.pv.pBot;
 
 public enum Crasher {
 
@@ -56,7 +55,6 @@ public enum Crasher {
         new Spigot(),
         new SSH(),
         new UDP(),
-        new pBot(),
         new Username()
     );
   }
