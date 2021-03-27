@@ -6,11 +6,13 @@
 ---
 
 ### Features
+
 - LazyLoading for crashers
 - Simple CommandAPI
 - Simple ExploitAPI
 
 ### Exploits
+
 - Bot: Simple minecraft bots (Handshake + LoginStart)
 - Ping: Handshake packet with status
 - Login: Handshake packet with login
@@ -25,20 +27,24 @@
 - Username: LoginStart with fucked username
 
 ### TODO
+
 > Add all "fixmem" crash methods
+
 - Bots ✔
-- ACK 
+- ACK
 - SSH Crasher ✔
 - Aegis bypass
 - Ping ✔
 - Join & Ping ✔
 - "Null" Ping ✔
-- Auth crash - idk ✔ (just send chat packet with /register Pass!@2d2 Pass!@2d2, do it on your own lol)
+- Auth crash - idk ✔ (just send chat packet with /register Pass!@2d2 Pass!@2d2, do it on your own
+  lol)
 - "Socket" Ping - wtf ✔
 - Username overflow - xd? ✔
 - "Fast" Ping - xd ✔
 - Overload - xd? ✔
-- Auth smasher - wtf ✔ (just send chat packet with /register Pass!@2d2 Pass!@2d2, do it on your own lol) 
+- Auth smasher - wtf ✔ (just send chat packet with /register Pass!@2d2 Pass!@2d2, do it on your own
+  lol)
 - Bungee crasher - idk ✔ ( private ( ͡° ͜ʖ ͡°) )
 - ROTATE - i'm confused (i'm don't even know what this doing xd)
 - "Socket" bots ✔
