@@ -14,7 +14,7 @@ public @interface CommandInfo {
 
   String description() default "No description provided";
 
-  String usage() default "Command doen't have usage";
+  String usage() default "Command doesn't have usage";
 
   String[] aliases() default {};
 }

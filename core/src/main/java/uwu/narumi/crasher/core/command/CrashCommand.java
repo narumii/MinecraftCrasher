@@ -1,7 +1,6 @@
 package uwu.narumi.crasher.core.command;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import uwu.narumi.crasher.api.command.Command;
 import uwu.narumi.crasher.api.command.CommandInfo;
@@ -35,13 +34,12 @@ public class CrashCommand extends Command {
                   .println(String.format("%s: %s\n", exploit.getName(), exploit.getDescription())),
               () -> System.out.println(String.format("Exploit \"%s\" not found.\n", args[0])));
     } else {
-      Optional<Exploit<?>> exploit = Crasher.INSTANCE.getExploitManager().getExploit(args[0]);
-      if (exploit.isPresent()) {
-        ExploitHelper.submit(exploit.get(), ArgumentParser.parseArgs(exploit.get(), Arrays.copyOfRange(args, 1, args.length)));
-        return;
-      }
+      Exploit<?> exploit = Crasher.INSTANCE.getExploitManager().getExploit(args[0])
+          .orElseThrow(() -> new CommandException(
+              "Exploit not found. Use \"exploit list\" to see all exploits."));
 
-      throw new CommandException("Exploit not found. Use \"exploit list\" to see all exploits.");
+      ExploitHelper.submit(exploit,
+          ArgumentParser.parseArgs(exploit, Arrays.copyOfRange(args, 1, args.length)));
     }
   }
 }

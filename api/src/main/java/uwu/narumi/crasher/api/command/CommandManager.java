@@ -6,52 +6,25 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
-import org.jline.reader.Candidate;
-import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
-import org.jline.reader.ParsedLine;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import uwu.narumi.crasher.api.exception.CommandException;
-import uwu.narumi.crasher.api.optimizer.Optimizer;
 
-public class CommandManager implements Completer {
+public class CommandManager {
 
   private static final String PREFIX = ".";
-
+  private final ExecutorService executorService = Executors.newSingleThreadExecutor();
   private final List<Command> commands;
-  private Terminal terminal;
-  private LineReader lineReader;
-  private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
   public CommandManager(Command... commands) {
-    try {
-      terminal = TerminalBuilder.builder().system(true).streams(System.in, System.out).build();
-      lineReader = LineReaderBuilder.builder().terminal(terminal).completer(this).build();
-
-      executorService.submit(()-> {
-        String line;
-        while ((line = lineReader.readLine("mcc > ")) != null) {
-          handleCommand(line);
-        }
-      });
-    }catch (Exception e) {
-      executorService.submit(()-> {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-          Thread.sleep(10);
-          handleCommand(scanner.nextLine());
-        }
-      });
-    }
+    startConsoleReading();
     this.commands = Arrays.asList(commands);
   }
 
   private void handleCommand(String message) {
     if (message.isBlank() || message.isEmpty()) {
-      Optimizer.stopOptimizing();
       return;
     }
 
@@ -66,19 +39,27 @@ public class CommandManager implements Completer {
         .printf("Command \"%s\" not found. Use \"help\" to see command list.%n", args[0]));
   }
 
-  @Override
-  public void complete(LineReader lineReader, ParsedLine parsedLine, List<Candidate> list) {
-    if (parsedLine.line().isEmpty() || parsedLine.line().isBlank()) {
-      list.addAll(commands.stream()
-          .map(command -> new Candidate(command.getAlias()))
-          .collect(Collectors.toList())
-      );
-    } else {
-      list.addAll(commands.stream()
-          .filter(command -> command.getAlias().startsWith(parsedLine.line()))
-          .map(command -> new Candidate(command.getAlias()))
-          .collect(Collectors.toList())
-      );
+  private void startConsoleReading() {
+    try {
+      Terminal terminal = TerminalBuilder.builder().system(true).streams(System.in, System.out)
+          .build();
+      LineReader lineReader = LineReaderBuilder.builder().terminal(terminal).build();
+
+      executorService.submit(() -> {
+        String line;
+        while ((line = lineReader.readLine("mcc > ")) != null) {
+          handleCommand(line);
+        }
+      });
+    } catch (Exception e) {
+      executorService.submit(() -> {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+          Thread.sleep(10);
+          System.out.print("mcc > ");
+          handleCommand(scanner.nextLine());
+        }
+      });
     }
   }
 

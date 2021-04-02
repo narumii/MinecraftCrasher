@@ -40,7 +40,8 @@ public enum Crasher {
         + "╚Second             │\n"
         + "                 MiniGames\n");
 
-    commandManager = new CommandManager(new CrashCommand(), new StopCommand(), new HelpCommand(), new RenewCommand(), new LoadProxiesCommand());
+    commandManager = new CommandManager(new CrashCommand(), new StopCommand(), new HelpCommand(),
+        new RenewCommand(), new LoadProxiesCommand());
     exploitManager = new ExploitManager(
         new ACK(),
         new Bot(),

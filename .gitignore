@@ -1,7 +1,9 @@
 *.iml
-.idea
-*\target\
-target
+*.class
+*.jar
 
-C:/Users/narumi/IdeaProjects/MinecraftCrasher/core/src/uwu/narumi/crasher/core/exploit/pv/**
-/core/src/uwu/narumi/crasher/core/exploit/pv/**
+.idea
+target
+out
+
+core/src/main/java/uwu/narumi/crasher/core/exploit/pv

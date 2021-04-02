@@ -18,8 +18,10 @@ public final class UrlHelper {
     List<String> strings = new ArrayList<>();
     HttpURLConnection connection = null;
     try {
-      connection = (HttpURLConnection) new URL(site).openConnection();
-      connection.setRequestProperty("User-Agent", USER_AGENT);
+      connection = (HttpURLConnection) createConnection(site, Proxy.NO_PROXY);
+      if (connection == null) {
+        return strings;
+      }
 
       BufferedReader bufferedReader = new BufferedReader(
           new InputStreamReader(connection.getInputStream()));

@@ -11,6 +11,14 @@
 - Simple CommandAPI
 - Simple ExploitAPI
 
+--- 
+
+### Building
+- Terminal -> `mvn clean install` in working dir (dir with fucking pom.xml lol)
+- Jar file output: `core/target/MinecraftCrasher.jar`
+
+---
+
 ### Exploits
 
 - Bot: Simple minecraft bots (Handshake + LoginStart)

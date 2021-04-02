@@ -21,7 +21,7 @@ public class LoadProxiesCommand extends Command {
       Proxy.Type type = Proxy.Type.valueOf(args[0].toUpperCase());
       File file = new File(args[1]);
       ProxyHelper.loadProxiesFromFile(type, file);
-    }catch (Exception e) {
+    } catch (Exception e) {
       throw new CommandException(e.getMessage());
     }
   }
