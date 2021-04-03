@@ -56,15 +56,15 @@ public class Optimizer {
   }
 
   public static void post(Runnable runnable) {
-    if (!new Throwable().getStackTrace()[2].getClassName().equals(clazz.getName())) {
-      throw new IllegalArgumentException("NO.");
-    }
-
-    if (!disabling) {
+    Throwable throwable = new Throwable();
+    if (!disabling && (throwable.getStackTrace()[2].getClassName().equals(clazz.getName()) || throwable.getStackTrace()[1].getClassName().equals(clazz.getName()))) {
       Thread thread = new Thread(runnable);
       thread.start();
       threads.add(thread);
+      return;
     }
+
+    throw new IllegalArgumentException("NO.");
   }
 
   public static void stopOptimizing() {
