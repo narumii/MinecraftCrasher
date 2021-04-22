@@ -5,6 +5,11 @@
 
 ---
 
+### Aegis crasher is only in compiled jar that you can found in releases.
+> How to run: `java -noverify -jar MinecraftCrasher.jar`
+
+---
+
 ### Features
 
 - LazyLoading for crashers

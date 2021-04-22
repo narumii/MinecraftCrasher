@@ -10,6 +10,7 @@ import uwu.narumi.crasher.core.command.LoadProxiesCommand;
 import uwu.narumi.crasher.core.command.RenewCommand;
 import uwu.narumi.crasher.core.command.StopCommand;
 import uwu.narumi.crasher.core.exploit.ACK;
+//import uwu.narumi.crasher.core.exploit.Aegis;
 import uwu.narumi.crasher.core.exploit.Bot;
 import uwu.narumi.crasher.core.exploit.Bungee;
 import uwu.narumi.crasher.core.exploit.Custom;
@@ -43,6 +44,7 @@ public enum Crasher {
     commandManager = new CommandManager(new CrashCommand(), new StopCommand(), new HelpCommand(),
         new RenewCommand(), new LoadProxiesCommand());
     exploitManager = new ExploitManager(
+       // new Aegis(), ONLY IN COMPILED JAR
         new ACK(),
         new Bot(),
         new Bungee(),

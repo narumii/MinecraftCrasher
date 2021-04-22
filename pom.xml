@@ -10,8 +10,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>Api</module>
-    <module>Core</module>
+    <module>api</module>
+    <module>core</module>
   </modules>
 
   <properties>

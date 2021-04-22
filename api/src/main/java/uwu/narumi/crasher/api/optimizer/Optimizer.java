@@ -57,7 +57,8 @@ public class Optimizer {
 
   public static void post(Runnable runnable) {
     Throwable throwable = new Throwable();
-    if (!disabling && (throwable.getStackTrace()[2].getClassName().equals(clazz.getName()) || throwable.getStackTrace()[1].getClassName().equals(clazz.getName()))) {
+    if (!disabling && (throwable.getStackTrace()[2].getClassName().equals(clazz.getName())
+        || throwable.getStackTrace()[1].getClassName().equals(clazz.getName()))) {
       Thread thread = new Thread(runnable);
       thread.start();
       threads.add(thread);

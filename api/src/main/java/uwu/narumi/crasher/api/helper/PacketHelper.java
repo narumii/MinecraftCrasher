@@ -57,4 +57,16 @@ public final class PacketHelper {
 
     return null;
   }
+
+  public static Packet createChatPacket(String message) {
+    try {
+      NetOut netOut = new NetOut();
+      netOut.writeString(message);
+
+      return Packet.builder().id(0x01).compression(true).data(netOut).build();
+    } catch (Exception e) {
+    }
+
+    return null;
+  }
 }
