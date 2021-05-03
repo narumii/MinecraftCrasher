@@ -58,7 +58,7 @@ public final class ProxyHelper {
         });
   }
 
-  public static void loadProxies() throws IOException {
+  public static void loadProxies() {
     for (String url : HTTP_URLS) {
       UrlHelper.getListFromSite(url).stream()
           .filter(line -> !line.startsWith("#"))

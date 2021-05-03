@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+//idk it's from github i forget who create this
 /**
  * Generates a broken Minecraft-style twos-complement signed hex digest. Tested and confirmed to
  * match vanilla.
